@@ -42,8 +42,24 @@ func main()  {
 	}
 
 	// 初始化服务发现模块
+	if err = master.InitWorkerMgr(); err != nil{
+		goto ERT
+	}
 
+	// 初始化日志管理器
+	if err = master.InitLogMgr(); err != nil {
+		goto ERT
+	}
 
+	// 初始化任务管理器
+	if err = master.InitJobMgr(); err != nil {
+		goto ERT
+	}
+
+	// 启动HTTP服务
+	if err = master.InitApiServer(); err != nil {
+		goto ERT
+	}
 
 	ERT:
 		fmt.Println(err)
